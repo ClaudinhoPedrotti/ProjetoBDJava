@@ -5,18 +5,21 @@
  */
 package psv;
 
-import javax.swing.table.DefaultTableModel;
-
+import javax.swing.table.*;
+import java.sql.*;
+import java.util.*;
+import javax.swing.JOptionPane;
+import java.io.*;
 /**
  *
  * @author LABORATORIO_INFO
  */
-public class FmCarro extends javax.swing.JFrame {
+public class Main extends javax.swing.JFrame {
 
     /**
      * Creates new form FmCarro
      */
-    public FmCarro() {
+    public Main() {
         initComponents();
     }
 
@@ -51,7 +54,7 @@ public class FmCarro extends javax.swing.JFrame {
         btnFechar = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblConsulta = new javax.swing.JTable();
 
         jScrollPane2.setViewportView(jEditorPane1);
 
@@ -88,6 +91,12 @@ public class FmCarro extends javax.swing.JFrame {
         lblDesc.setText("Descrição");
 
         lblMensagem.setText("Mensagem");
+
+        txtPlaca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPlacaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -133,17 +142,62 @@ public class FmCarro extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(204, 255, 255));
 
         btnIncluir.setText("Incluir");
+        btnIncluir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnIncluirMouseClicked(evt);
+            }
+        });
+        btnIncluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIncluirActionPerformed(evt);
+            }
+        });
 
         btnAlterar.setText("Alterar");
+        btnAlterar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAlterarMouseClicked(evt);
+            }
+        });
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
 
         btnExcluir.setText("Excluir");
+        btnExcluir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnExcluirMouseClicked(evt);
+            }
+        });
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         btnPesquisar.setText("Pesquisar");
+        btnPesquisar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnPesquisarMouseClicked(evt);
+            }
+        });
+        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarActionPerformed(evt);
+            }
+        });
 
         btnLimpar.setText("Limpar");
         btnLimpar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnLimparMouseClicked(evt);
+            }
+        });
+        btnLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparActionPerformed(evt);
             }
         });
 
@@ -188,7 +242,7 @@ public class FmCarro extends javax.swing.JFrame {
 
         jPanel4.setBackground(new java.awt.Color(204, 255, 255));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblConsulta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -211,11 +265,16 @@ public class FmCarro extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
+        tblConsulta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblConsultaMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblConsulta);
+        if (tblConsulta.getColumnModel().getColumnCount() > 0) {
+            tblConsulta.getColumnModel().getColumn(0).setResizable(false);
+            tblConsulta.getColumnModel().getColumn(1).setResizable(false);
+            tblConsulta.getColumnModel().getColumn(2).setResizable(false);
         }
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -274,11 +333,124 @@ public class FmCarro extends javax.swing.JFrame {
         lblMensagem.setText("");
         
         
-       // DefaultTableModel tbm = (DefaultTableModel)tblConsulta.getModel();
-         //   for(int i = tbm.getRowCount()-1; i>= 0; i-- ){
-        //        tbm.remopveRow(i);
-      //      }
+        DefaultTableModel tbm = (DefaultTableModel)tblConsulta.getModel();
+            for(int i = tbm.getRowCount()-1; i>= 0; i-- ){
+                tbm.removeRow(i);
+           }
+            
+        txtPlaca.enable();
     }//GEN-LAST:event_btnLimparMouseClicked
+
+    private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnIncluirActionPerformed
+
+    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLimparActionPerformed
+
+    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPesquisarActionPerformed
+
+    private void btnPesquisarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPesquisarMouseClicked
+        Connection con = Conexao.abrirConexão();
+        CarroDAO cd = new CarroDAO(con);
+        List<CarroBean> listaCarro = new ArrayList<CarroBean>();
+        listaCarro = cd.listarTodos();
+        
+        DefaultTableModel tbm = (DefaultTableModel)tblConsulta.getModel();
+        
+        for(int i = tbm.getRowCount()-1; i >= 0; i--){
+            tbm.removeRow(i);
+        }
+        int i = 0;
+        
+        for(CarroBean cb : listaCarro){
+            tbm.addRow(new String[1]);
+            tblConsulta.setValueAt(cb.getPlaca(), i, 0);
+            tblConsulta.setValueAt(cb.getCor(), i, 1);
+            tblConsulta.setValueAt(cb.getDescricao(), i, 2);
+            i++;
+        }
+        Conexao.fecharConexão(con);
+    }//GEN-LAST:event_btnPesquisarMouseClicked
+
+    private void tblConsultaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblConsultaMouseClicked
+        Integer linha = tblConsulta.getSelectedRow();
+        String placa = (String)tblConsulta.getValueAt(linha, 0);
+        String cor = (String)tblConsulta.getValueAt(linha, 1);
+        String descricao = (String)tblConsulta.getValueAt(linha, 2);
+        
+        txtPlaca.setText(placa);
+        txtCor.setText(cor);
+        txtDesc.setText(descricao);
+        
+        txtPlaca.disable();
+    }//GEN-LAST:event_tblConsultaMouseClicked
+
+    private void btnAlterarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAlterarMouseClicked
+        Connection con = Conexao.abrirConexão();
+        CarroBean cb = new CarroBean();
+        CarroDAO cd = new CarroDAO(con);
+        cb.setPlaca(txtPlaca.getText());
+        cb.setCor(txtCor.getText());
+        cb.setDescricao(txtDesc.getText());
+        lblMensagem.setText(cd.alterar(cb));
+        Conexao.fecharConexão(con);
+        btnLimparMouseClicked(evt);
+        btnPesquisarMouseClicked(evt);
+    }//GEN-LAST:event_btnAlterarMouseClicked
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnExcluirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExcluirMouseClicked
+        Connection con = Conexao.abrirConexão();
+        CarroBean cb = new CarroBean();
+        CarroDAO cd = new CarroDAO(con);
+        cb.setPlaca(txtPlaca.getText());
+        Object[] opcoes = { "Sim!", "Não!" };
+        int i = JOptionPane.showOptionDialog(null,
+                "Deseja excluir esse veículo:"
+                        +txtPlaca.getText()+"?", "Exclusão",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE, null,
+                        opcoes, opcoes[0]);
+        
+        if (i == JOptionPane.YES_OPTION){
+            lblMensagem.setText(cd.Excluir(cb));
+        }
+        Conexao.fecharConexão(con);
+        
+        btnLimparMouseClicked(evt);
+        btnPesquisarMouseClicked(evt);
+    }//GEN-LAST:event_btnExcluirMouseClicked
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAlterarActionPerformed
+
+    private void btnIncluirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIncluirMouseClicked
+        Connection con = Conexao.abrirConexão();
+        CarroBean cb = new CarroBean();
+        CarroDAO cd = new CarroDAO(con);
+        
+        cb.setPlaca(txtPlaca.getText());
+        cb.setCor(txtCor.getText());
+        cb.setDescricao(txtDesc.getText());
+        
+        lblMensagem.setText(cd.inserir(cb));
+        
+        Conexao.fecharConexão(con);
+        btnLimparMouseClicked(evt);
+        btnPesquisarMouseClicked(evt);
+    }//GEN-LAST:event_btnIncluirMouseClicked
+
+    private void txtPlacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPlacaActionPerformed
+        
+    }//GEN-LAST:event_txtPlacaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -297,20 +469,21 @@ public class FmCarro extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FmCarro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FmCarro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FmCarro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FmCarro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FmCarro().setVisible(true);
+                new Main().setVisible(true);
             }
         });
     }
@@ -330,11 +503,11 @@ public class FmCarro extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblCor;
     private javax.swing.JLabel lblDesc;
     private javax.swing.JLabel lblMensagem;
     private javax.swing.JLabel lblPlaca;
+    private javax.swing.JTable tblConsulta;
     private javax.swing.JTextField txtCor;
     private javax.swing.JTextField txtDesc;
     private javax.swing.JTextField txtPlaca;
